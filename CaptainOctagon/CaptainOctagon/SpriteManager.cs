@@ -3,13 +3,17 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace CaptainOctagon
 {
     public class SpriteManager : DrawableGameComponent
     {
-        SpriteBatch spriteBatch;
-        UserControlledSprite player;
+        private SpriteBatch SpriteBatch;
+        private UserControlledSprite player;
+        private Random randomNumber { get; set; }
+
+        private int livesRemaining { get; set; }
 
         List<Sprite> spriteList = new List<Sprite>();
         List<Sprite> redList = new List<Sprite>();
@@ -32,13 +36,10 @@ namespace CaptainOctagon
         int millisecondsPerFrame = 100;
 
         //Gem
-        private Color drawingColor;
         Vector2 gemPosition;
         bool setGemBlue;
         bool setGemRed;
         bool collisionWithPlayer;
-
-        int changeGemColorTimer = 2000;
 
         //SOUNDS
         SoundEffect explosionSound;
@@ -47,10 +48,10 @@ namespace CaptainOctagon
         SoundEffectInstance diamondCollectedInstance;
 
 
-        public SpriteManager(Game game)
-            : base(game)
+        public SpriteManager(Game game) : base(game)
         {
-            // TODO: Construct any child components here
+            randomNumber = new Random();
+            
         }
 
         public override void Initialize()
@@ -63,7 +64,7 @@ namespace CaptainOctagon
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(Game.GraphicsDevice);
+            SpriteBatch = new SpriteBatch(Game.GraphicsDevice);
             player = new UserControlledSprite(
             Game.Content.Load<Texture2D>(@"Textures/Playership"), Color.White,
             Vector2.Zero, new Point(32, 41), 6, new Point(0, 0),
@@ -105,7 +106,7 @@ namespace CaptainOctagon
                     //if gem is blue take away a life
                     if (setGemBlue == true)
                     {
-                        --((Start)Game).NumberLivesRemaining;
+                        --NumberLivesRemaining;
                         collisionWithPlayer = true;
                     }
                 }
@@ -140,7 +141,7 @@ namespace CaptainOctagon
                     //else take away a life
                     else
                     {
-                        --((Start)Game).NumberLivesRemaining;
+                        --NumberLivesRemaining;
                         collisionWithPlayer = true;
                     }
                 }
@@ -192,24 +193,24 @@ namespace CaptainOctagon
 
         public override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
+            SpriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
 
             //Draw the player
-            player.Draw(gameTime, spriteBatch);
+            player.Draw(gameTime, SpriteBatch);
             player.DrawingColor = Color.White;
 
             //Draw all sprites
             //Swap between drawing colour of red and blue
             foreach (Sprite s in redList)
             {
-                s.Draw(gameTime, spriteBatch);
+                s.Draw(gameTime, SpriteBatch);
                 s.DrawingColor = Color.LightBlue;
                 setGemBlue = true;
                 redGemSpawnTime -= gameTime.ElapsedGameTime.Milliseconds;
 
                 if (redGemSpawnTime < 0)
                 {
-                    s.Draw(gameTime, spriteBatch);
+                    s.Draw(gameTime, SpriteBatch);
                     s.DrawingColor = Color.Red;
                     setGemRed = true;
                     gemSpawnTime -= gameTime.ElapsedGameTime.Milliseconds;
@@ -226,7 +227,7 @@ namespace CaptainOctagon
 
             foreach (Sprite s in spriteList)
             {
-                s.Draw(gameTime, spriteBatch);
+                s.Draw(gameTime, SpriteBatch);
                 s.DrawingColor = Color.LightBlue;
                 setGemBlue = true;
             }
@@ -237,10 +238,10 @@ namespace CaptainOctagon
             if (collisionWithPlayer == true)
             {
                 //Draw explosion
-                spriteBatch.Draw(explosion, (gemPosition1), new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(50, 50), 1, SpriteEffects.None, 0);
+                SpriteBatch.Draw(explosion, (gemPosition1), new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(50, 50), 1, SpriteEffects.None, 0);
             }
 
-            spriteBatch.End();
+            SpriteBatch.End();
             base.Draw(gameTime);
         }
 
@@ -251,7 +252,7 @@ namespace CaptainOctagon
         public int getSpriteWidth() => 2;
 
         //Reset Gem spawn Time
-        private void ResetSpawnTime() => nextSpawnTime = ((Start)Game).rand.Next(enemySpawnMinMilliseconds, enemySpawnMaxMilliseconds);
+        private void ResetSpawnTime() => nextSpawnTime = randomNumber.Next(enemySpawnMinMilliseconds, enemySpawnMaxMilliseconds);
 
         private void ResetRedGemTime()
         {
@@ -272,22 +273,22 @@ namespace CaptainOctagon
             Point frameSize = new Point(75, 75);
 
             //Choose randomly - switch 1 or 2
-            switch (((Start)Game).rand.Next(2))
+            switch (randomNumber.Next(2))
             {
                 case 0:
                     //Random posistion on right hand side of screen
-                    position = new Vector2(Game.GraphicsDevice.PresentationParameters.BackBufferWidth, ((Start)Game).rand.Next(0, Game.GraphicsDevice.PresentationParameters.BackBufferHeight - frameSize.Y));
+                    position = new Vector2(Game.GraphicsDevice.PresentationParameters.BackBufferWidth, (randomNumber.Next(0, Game.GraphicsDevice.PresentationParameters.BackBufferHeight - frameSize.Y)));
 
                     //Random Speed
-                    speed = new Vector2(-((Start)Game).rand.Next(enemyMinSpeed, enemyMaxSpeed), ((Start)Game).rand.Next(enemyMinSpeed, enemyMaxSpeed));
+                    speed = new Vector2(-randomNumber.Next(enemyMinSpeed, enemyMaxSpeed), (randomNumber.Next(enemyMinSpeed, enemyMaxSpeed)));
                     break;
 
                 //Random Posistion On top of screen
                 case 1:
-                    position = new Vector2(((Start)Game).rand.Next(0, Game.GraphicsDevice.PresentationParameters.BackBufferWidth - frameSize.X), -10);
+                    position = new Vector2(randomNumber.Next(0, Game.GraphicsDevice.PresentationParameters.BackBufferWidth - frameSize.X), -10);
 
                     //Random Speed
-                    speed = new Vector2(-((Start)Game).rand.Next(enemyMinSpeed, enemyMaxSpeed), ((Start)Game).rand.Next(enemyMinSpeed, enemyMaxSpeed));
+                    speed = new Vector2(-randomNumber.Next(enemyMinSpeed, enemyMaxSpeed), randomNumber.Next(enemyMinSpeed, enemyMaxSpeed));
                     break;
             }
 
@@ -301,21 +302,34 @@ namespace CaptainOctagon
             Vector2 position = Vector2.Zero;
             Point frameSize = new Point(75, 75);
 
-            switch (((Start)Game).rand.Next(2))
+            switch (randomNumber.Next(2))
             {
                 case 0:
-                    position = new Vector2(((Start)Game).rand.Next(0, Game.GraphicsDevice.PresentationParameters.BackBufferWidth - frameSize.X), -10);
-                    speed = new Vector2(-((Start)Game).rand.Next(enemyMinSpeed, enemyMaxSpeed), ((Start)Game).rand.Next(enemyMinSpeed, enemyMaxSpeed));
+                    position = new Vector2(randomNumber.Next(0, Game.GraphicsDevice.PresentationParameters.BackBufferWidth - frameSize.X), -10);
+                    speed = new Vector2(-randomNumber.Next(enemyMinSpeed, enemyMaxSpeed), randomNumber.Next(enemyMinSpeed, enemyMaxSpeed));
                     break;
                 case 1:
-                    position = new Vector2(Game.GraphicsDevice.PresentationParameters.BackBufferWidth, ((Start)Game).rand.Next(0, Game.GraphicsDevice.PresentationParameters.BackBufferHeight - frameSize.Y));
-                    speed = new Vector2(-((Start)Game).rand.Next(enemyMinSpeed, enemyMaxSpeed), ((Start)Game).rand.Next(enemyMinSpeed, enemyMaxSpeed));
+                    position = new Vector2(Game.GraphicsDevice.PresentationParameters.BackBufferWidth, randomNumber.Next(0, Game.GraphicsDevice.PresentationParameters.BackBufferHeight - frameSize.Y));
+                    speed = new Vector2(-randomNumber.Next(enemyMinSpeed, enemyMaxSpeed), randomNumber.Next(enemyMinSpeed, enemyMaxSpeed));
                     break;
             }
 
             redList.Add(new GemSprite(Game.Content.Load<Texture2D>(@"Textures\Gem"), drawingColor, position, new Point(32, 32), 6, new Point(0, 0), new Point(0, 0), speed, 0));
 
             gemPosition = position;
+        }
+
+        private int NumberLivesRemaining
+        {
+            get => livesRemaining;
+            set
+            {
+                livesRemaining = value;
+                if (livesRemaining == 0)
+                {
+                    // TODO Set GameOver
+                }
+            }
         }
     }
 }
