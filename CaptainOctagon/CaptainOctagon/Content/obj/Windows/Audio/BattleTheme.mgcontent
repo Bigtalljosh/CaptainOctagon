@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/joshd/Documents/GitHub/CaptainOctagon/CaptainOctagon/CaptainOctagon/Content/Audio/BattleTheme.mp3</SourceFile>
+  <SourceTime>2017-12-04T15:53:30.0525697+00:00</SourceTime>
+  <DestFile>C:/Users/joshd/Documents/GitHub/CaptainOctagon/CaptainOctagon/CaptainOctagon/Content/bin/Windows/Audio/BattleTheme.xnb</DestFile>
+  <DestTime>2017-12-04T18:00:13.4520789+00:00</DestTime>
+  <Importer>Mp3Importer</Importer>
+  <ImporterTime>2017-03-01T15:05:36+00:00</ImporterTime>
+  <Processor>SongProcessor</Processor>
+  <ProcessorTime>2017-03-01T15:05:36+00:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput>
+    <string>C:/Users/joshd/Documents/GitHub/CaptainOctagon/CaptainOctagon/CaptainOctagon/Content/bin/Windows/Audio/BattleTheme.wma</string>
+  </BuildOutput>
+</PipelineBuildEvent>

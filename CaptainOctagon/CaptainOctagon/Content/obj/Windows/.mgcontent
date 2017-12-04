@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/joshd/Documents/GitHub/CaptainOctagon/CaptainOctagon/CaptainOctagon/Content/Textures/Explosion.dds</File>
+    <File>C:/Users/joshd/Documents/GitHub/CaptainOctagon/CaptainOctagon/CaptainOctagon/Content/Textures/Gem.png</File>
+    <File>C:/Users/joshd/Documents/GitHub/CaptainOctagon/CaptainOctagon/CaptainOctagon/Content/Textures/laser.png</File>
+    <File>C:/Users/joshd/Documents/GitHub/CaptainOctagon/CaptainOctagon/CaptainOctagon/Content/Textures/Playership.bmp</File>
+    <File>C:/Users/joshd/Documents/GitHub/CaptainOctagon/CaptainOctagon/CaptainOctagon/Content/Textures/starfield.dds</File>
+    <File>C:/Users/joshd/Documents/GitHub/CaptainOctagon/CaptainOctagon/CaptainOctagon/Content/Audio/BattleTheme.mp3</File>
+    <File>C:/Users/joshd/Documents/GitHub/CaptainOctagon/CaptainOctagon/CaptainOctagon/Content/Audio/DiamondCollected.wav</File>
+    <File>C:/Users/joshd/Documents/GitHub/CaptainOctagon/CaptainOctagon/CaptainOctagon/Content/Audio/Explosion.wav</File>
+    <File>C:/Users/joshd/Documents/GitHub/CaptainOctagon/CaptainOctagon/CaptainOctagon/Content/Audio/LoseTheme.wav</File>
+    <File>C:/Users/joshd/Documents/GitHub/CaptainOctagon/CaptainOctagon/CaptainOctagon/Content/Audio/WinTheme.wav</File>
+    <File>C:/Users/joshd/Documents/GitHub/CaptainOctagon/CaptainOctagon/CaptainOctagon/Content/Fonts/Lives.spritefont</File>
+    <File>C:/Users/joshd/Documents/GitHub/CaptainOctagon/CaptainOctagon/CaptainOctagon/Content/Fonts/score.spritefont</File>
+  </SourceFiles>
+</SourceFileCollection>
